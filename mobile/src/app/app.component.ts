@@ -1,7 +1,8 @@
 import {Component, ViewChild} from '@angular/core';
 import {Nav, Platform} from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import {StatusBar} from '@ionic-native/status-bar';
+import {SplashScreen} from '@ionic-native/splash-screen';
+import {StoreService} from "../services/store.service";
 
 
 @Component({
@@ -10,12 +11,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage:any = 'TabsPage';
-
-  activePage: any;
+  rootPage: any = 'TabsPage';
   pages: any;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public storeService: StoreService) {
 
     this.pages = [
       {title: 'Home', icon: 'home', component: 'HomePage', index: 0},
@@ -23,7 +22,7 @@ export class MyApp {
       {title: 'Contact', icon: 'information-circle', component: 'ContactPage', index: 2},
     ];
 
-    this.activePage = this.pages[0];
+    this.storeService.sideMenuActivePage = this.pages[0].component;
 
 
     platform.ready().then(() => {
@@ -38,7 +37,7 @@ export class MyApp {
   openPage(page) {
     let params = {};
 
-    this.activePage = page;
+    this.storeService.sideMenuActivePage = page.component;
 
     // the nav component was found using @ViewChild(Nav)
     // setRoot on the nav to remove previous pages and only have this page
@@ -49,7 +48,7 @@ export class MyApp {
 
     if (page.component == 'LoginPage') {
       this.nav.push('LoginPage');
-      this.activePage = this.pages[0];
+      this.storeService.sideMenuActivePage = this.pages[0].component;
       this.checkActive(this.pages[0])
     }
 
@@ -68,7 +67,7 @@ export class MyApp {
 
   //Higlight tab on sidemenu
   checkActive(page) {
-      return page == this.activePage;
+    return page.component == this.storeService.sideMenuActivePage;
   }
 
 

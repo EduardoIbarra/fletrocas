@@ -16,10 +16,10 @@
 // automatically applied to the <body> element in the app.
 
 .active-highlight {
-  //background-color: map-get($colors, light);
+  background-color: #d3d3d3;
   color: map-get($colors, primary) !important;
 }
 
 .active-highlight-icon {
-  color: map-get($colors, secondary);
+  color: map-get($colors, primary);
 }

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {IonicPage, NavController, Tabs} from 'ionic-angular';
+import {StoreService} from "../../services/store.service";
 
 
 @IonicPage()
@@ -12,8 +13,12 @@ export class TabsPage {
   homeRoot = 'HomePage';
   aboutRoot = 'AboutPage';
   contactRoot = 'ContactPage';
+  @ViewChild(Tabs) tabRef: Tabs;
 
+  constructor(public navCtrl: NavController, public storeService: StoreService) {
+  }
 
-  constructor(public navCtrl: NavController) {}
-
+  selectPageSideMenu() {
+    this.storeService.sideMenuActivePage = this.tabRef.getSelected().root
+  }
 }
